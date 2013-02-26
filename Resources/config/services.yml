@@ -1,7 +1,15 @@
 parameters:
     webit_sencha.installer.class: Webit\Bundle\SenchaBundle\Component\Common\Installer
-
+    webit_sencha.extjs_controller.class: Webit\Bundle\SenchaBundle\Controller\ExtJsController
+    webit_sencha.touch_controller.class: Webit\Bundle\SenchaBundle\Controller\TouchController
+    
 services:
     webit_sencha.installer:
         class: %webit_sencha.installer.class%
         arguments: [%webit_sencha.assets_dir%, { extjs: %webit_sencha.extjs_url_list%, touch: %webit_sencha.touch_url_list% }]
+    webit_sencha.extjs_controller:
+        class: %webit_sencha.extjs_controller.class%
+        arguments: [@service_container]
+    webit_sencha.touch_controller:
+        class: %webit_sencha.touch_controller.class%
+        arguments: [@service_container]

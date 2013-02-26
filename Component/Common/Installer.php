@@ -22,8 +22,8 @@ class Installer {
 	}
 	
 	private function setTargetDir($dir) {
-		if(!is_dir($targetDir)) {
-			@mkdir($targetDir,0755,true);
+		if(!is_dir($dir)) {
+			@mkdir($dir,0755,true);
 		}
 		
 		if(!is_writable($dir)) {
@@ -55,7 +55,7 @@ class Installer {
 		if($sourceFile == null) {
 			$url = $this->getUrl($lib, $version);
 			$sourceFile = $this->download($url, $lib);
-			if(!$path) {
+			if(!$sourceFile) {
 				throw new \Exception('Cannot download library from given url: '.$url);
 			}	
 		}
@@ -82,7 +82,7 @@ class Installer {
 		$zip->open($path);
 		$zip->extractTo($this->targetDir);
 		 
-		rename($this->getAssetDir() . '/'. $zip->getNameIndex(0), $this->targetDir . '/'.$lib.'-'.$version);
+		rename($this->targetDir . '/'. $zip->getNameIndex(0), $this->targetDir . '/'.$lib.'-'.$version);
 		 
 		unlink($path);
 	}

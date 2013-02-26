@@ -25,22 +25,22 @@ class WebitSenchaExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         
-        $container->setParameter($alias.'.assets_dir', $this->resolvePath($config['assets_dir']));
+        $container->setParameter($this->getAlias().'.assets_dir', $this->resolvePath($config['assets_dir'],$container));
         
         $this->loadExtJs($config['extjs'], $container);
         $this->loadTouch($config['touch'], $container);
-        $this->loadSecurity($config['security']);
     }
     
-    private function resolvePath($path) {
+    private function resolvePath($path, ContainerBuilder $container) {
     	if(!in_array($path[0],array('/','@'))) {
     		$path = '@WebitSenchaBundle/'.$path;	
     	}
     	
    		if ('@' === $path[0]) {
-			$bundleName = substr($directory['path'], 1, strpos($directory['path'], '/') - 1);
+   			$bundles = $container->getParameter('kernel.bundles');
+			$bundleName = substr($path, 1, strpos($path, '/') - 1);
 			if (!isset($bundles[$bundleName])) {
-				throw new RuntimeException(sprintf('The bundle "%s" has not been registered with AppKernel. Available bundles: %s', $bundleName, implode(', ', array_keys($bundles))));
+				throw new \RuntimeException(sprintf('The bundle "%s" has not been registered with AppKernel. Available bundles: %s', $bundleName, implode(', ', array_keys($bundles))));
 			}
     		
 			$ref = new \ReflectionClass($bundles[$bundleName]);
@@ -60,10 +60,5 @@ class WebitSenchaExtension extends Extension
     	$alias = $this->getAlias();
     	$container->setParameter($alias.'.touch_version',$config['version']);
     	$container->setParameter($alias.'.touch_url_list',$config['download_url']);
-    }
-    
-    private function loadSecurity($config, ContainerBuilder $container) {
-    	$alias = $this->getAlias();
-    	$container->setParameter($alias.'.security_user_model',$config['model']);
     }
 }
