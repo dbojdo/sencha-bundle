@@ -1,0 +1,24 @@
+{
+	"name" : "webit/sencha-bundle",
+	"type": "symfony-bundle",
+	"description": "Web-IT Sencha (ExtJs and Touch) Bundle",
+	"keywords": ["web-it","sencha","extjs", "sencha touch"],
+	"homepage": "http://www.web-it.eu",
+	"license": "Web-IT",
+	"authors": [
+		{
+			"name": "Web-IT",
+			"homepage": "http://www.web-it.eu"
+		}
+	],
+	"require": {
+		"php": ">=5.3.2",
+		"webit/php-tools" : "*"
+	},
+	"autoload": {
+		"psr-0": {
+			"Webit\\Bundle\\SenchaBundle" : ""
+		}
+	},
+	"target-dir" : "Webit/Bundle/SenchaBundle"
+}

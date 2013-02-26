@@ -1,0 +1,7 @@
+parameters:
+    webit_sencha.installer.class: Webit\Bundle\SenchaBundle\Component\Common\Installer
+
+services:
+    webit_sencha.installer:
+        class: %webit_sencha.installer.class%
+        arguments: [%webit_sencha.assets_dir%, { extjs: %webit_sencha.extjs_url_list%, touch: %webit_sencha.touch_url_list% }]
