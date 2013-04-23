@@ -21,13 +21,15 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('webit_sencha');
         $rootNode
         ->children()
+            ->scalarNode('store_key')->defaultValue('store')->end()
             ->scalarNode('assets_dir')->defaultValue('@WebitSenchaBundle/Resources/public/js')->end()
         	->arrayNode('extjs')
         		->addDefaultsIfNotSet()
         		->children()
-	        		->scalarNode('version')->defaultValue('4.1.1')->end()
+	        		->scalarNode('version')->defaultValue('4.2.0')->end()
 	        		->arrayNode('download_url')
 	        			->defaultValue(array(
+	        				'4.2.0' => 'http://cdn.sencha.com/ext/gpl/ext-4.2.0-gpl.zip',
 	        				'4.1.1' => 'http://cdn.sencha.io/ext-4.1.1-gpl.zip'
 	        			))
 	        			->prototype('scalar')->end()
@@ -37,10 +39,11 @@ class Configuration implements ConfigurationInterface
         	->arrayNode('touch')
         		->addDefaultsIfNotSet()
         		->children()
-        			->scalarNode('version')->defaultValue('2.1.1')->end()
+        			->scalarNode('version')->defaultValue('2.2.0')->end()
 		        	->arrayNode('download_url')
 			        	->defaultValue(array(
-			        			'2.1.1' => 'http://cdn.sencha.io/touch/sencha-touch-2.1.1-gpl.zip'
+			        		'2.2.0' => 'http://cdn.sencha.io/touch/sencha-touch-2.2.0-gpl.zip',
+			        		'2.1.1' => 'http://cdn.sencha.io/touch/sencha-touch-2.1.1-gpl.zip'
 			        	))->prototype('scalar')->end()
 	        		->end()
 	        	->end()

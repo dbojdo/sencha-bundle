@@ -13,12 +13,12 @@ class TouchController extends Controller {
 	
 	public function includeJsAction() {
 		return $this
-				->render('WebitSenchaBundle:Touch:includeJs.html.twig',array('version'=>'2.1.1'));
+				->render('WebitSenchaBundle:Touch:includeJs.html.twig',array('version'=>'2.2.0'));
 	}
 	
 	public function includeCssAction() {
 		return $this
-			->render('WebitSenchaBundle:Touch:includeCss.html.twig',array('version'=>'2.1.1'));
+			->render('WebitSenchaBundle:Touch:includeCss.html.twig',array('version'=>'2.2.0'));
 	}
 }
 ?>
