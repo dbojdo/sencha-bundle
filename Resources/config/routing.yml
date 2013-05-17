@@ -3,3 +3,9 @@ WebitSenchaBundle_store:
     resource: webit_sencha.store_controller
     options:
         expose: true
+WebitSenchaBundle_tree_store:
+    type: rest
+    resource: webit_sencha.tree_store_controller
+    options:
+        expose: true
+        

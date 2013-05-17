@@ -10,10 +10,12 @@ default:
       key: filters
       type: Webit\Tools\Data\FilterCollection
       format: json
+      default_value: "[]"
     sorters: 
       key: sorters
       type: Webit\Tools\Data\SorterCollection
       format: json
+      default_value: "[]"
     limit:
       key: limit
       type: integer
@@ -26,6 +28,7 @@ default:
     data:
       key: data
       type: array
+      default_value: "[]"
   response:
     format: json
     serializer_groups:

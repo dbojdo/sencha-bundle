@@ -35,12 +35,21 @@ class RequestConfiguration {
 		return 'json';
 	}
 	
+	public function getParamDefaultValue($param) {
+		if($this->hasParam($param) && isset($this->params[$param]['default_value'])) {
+			return $this->params[$param]['default_value'];
+		}
+	
+		return null;
+	}
+	
+	
 	private function hasParam($param) {
 		return isset($this->params[$param]);
 	}
 	
 	public function getBaseParams() {
-		return array('filters','sorters','data','limit','offset','page');
+		return array('id','node','filters','sorters','data','limit','offset','page');
 	}
 	
 	public function getExtraParams() {

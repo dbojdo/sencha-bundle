@@ -1,0 +1,72 @@
+Webit\Bundle\SenchaBundle\Component\Store\TreeNode:
+  properties:
+    id:
+      groups: [store]
+    text:
+      type: string
+      groups: [store]
+    parentId:
+      groups: [store]
+    index:
+      type: integer
+      groups: [store]
+    depth:
+      type: integer
+      groups: [store]
+    expanded:
+      type: boolean
+      groups: [store]
+    expandable:
+      type: boolean
+      groups: [store]
+    checked:
+      type: boolean
+      groups: [store]
+    leaf:
+      type: boolean
+      groups: [store]
+    cls:
+      type: string
+      groups: [store]
+    iconCls:
+      type: string
+      groups: [store]
+    icon:
+      type: string
+      groups: [store]  
+    root:
+      type: boolean
+      groups: [store]
+    isLast:
+      type: boolean
+      groups: [store]
+    isFirst:
+      type: boolean
+      groups: [store]
+    allowDrop:
+      type: boolean
+      groups: [store]
+    allowDrag:
+      type: boolean
+      groups: [store]
+    loaded:
+      type: boolean
+      groups: [store]
+    loading:
+      type: boolean
+      groups: [store]
+    href:
+      type: string
+      groups: [store]
+    hrefTarget:
+      type: string
+      groups: [store]
+    qtip:
+      type: string
+      groups: [store]
+    qtitle:
+      type: string
+      groups: [store]
+    children:
+      type: ArrayCollection<Webit\Bundle\ExtJsBundle\TreeStore\TreeNodeData>
+      

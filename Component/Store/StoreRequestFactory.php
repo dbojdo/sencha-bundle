@@ -42,7 +42,7 @@ class StoreRequestFactory {
 			$p = $refObject->getProperty($key);
 			$p->setAccessible(true);
 
-			$value = $this->serializer->deserialize($this->request->get($config->getParamKey($key),'[]'), $config->getParamType($key), $config->getParamFormat($key));
+			$value = $this->serializer->deserialize($this->request->get($config->getParamKey($key),$config->getParamDefaultValue($key)), $config->getParamType($key), $config->getParamFormat($key));
 			$p->setValue($storeRequest, $value);
 			$p->setAccessible(false);
 			//unset($config[$key]);
@@ -56,7 +56,7 @@ class StoreRequestFactory {
 				throw new \RuntimeException('Missing configuration (key or type) for property: "'.$storeName.'->'.$prop.'"');
 			}
 			
-			$others[$prop] = $this->serializer->deserialize($this->request->get($config->getParamKey($prop),''), $config->getParamType($prop), $config->getParamFormat($prop)); 
+			$others[$prop] = $this->serializer->deserialize($this->request->get($config->getParamKey($prop),$config->getParamDefaultValue($prop)), $config->getParamType($prop), $config->getParamFormat($prop)); 
 		}
 		
 		$p = $refObject->getProperty('misc');
