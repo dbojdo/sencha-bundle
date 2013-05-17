@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('webit_sencha');
         $rootNode
         ->children()
-            ->scalarNode('store_key')->defaultValue('store')->end()
+            ->scalarNode('request_store_key')->defaultValue('store')->end()
             ->scalarNode('assets_dir')->defaultValue('@WebitSenchaBundle/Resources/public/js')->end()
         	->arrayNode('extjs')
         		->addDefaultsIfNotSet()

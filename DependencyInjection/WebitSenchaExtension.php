@@ -2,6 +2,10 @@
 
 namespace Webit\Bundle\SenchaBundle\DependencyInjection;
 
+use Webit\Bundle\SenchaBundle\Component\Store\Configuration\ConfigurationBuilder;
+
+use Symfony\Component\Yaml\Yaml;
+
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -26,9 +30,12 @@ class WebitSenchaExtension extends Extension
         $loader->load('services.yml');
         
         $container->setParameter($this->getAlias().'.assets_dir', $this->resolvePath($config['assets_dir'],$container));
+        $container->setParameter($this->getAlias().'.request_store_key', $config['request_store_key']);
         
         $this->loadExtJs($config['extjs'], $container);
         $this->loadTouch($config['touch'], $container);
+        
+        $this->loadStoreConfigs($container);
     }
     
     private function resolvePath($path, ContainerBuilder $container) {
@@ -60,5 +67,47 @@ class WebitSenchaExtension extends Extension
     	$alias = $this->getAlias();
     	$container->setParameter($alias.'.touch_version',$config['version']);
     	$container->setParameter($alias.'.touch_url_list',$config['download_url']);
+    }
+    
+    private function loadStoreConfigs(ContainerBuilder $container) {
+    	$bundles = $container->getParameter('kernel.bundles');
+    	unset($bundles['WebitSenchaBundle']);
+    	
+    	$storeBuilder = new ConfigurationBuilder();
+    	$this->loadBundleStoreConfig('WebitSenchaBundle',$storeBuilder, $container);
+    	
+    	foreach($bundles as $bundleName => $bundle) {
+    		$this->loadBundleStoreConfig($bundleName, $storeBuilder, $container);
+    	}
+    	
+    	$def = $container->getDefinition('webit_sencha.store_request_factory');
+    	$def->replaceArgument(0,$storeBuilder->getRequestConfigMap());
+    	
+    	$def = $container->getDefinition('webit_sencha.store_response_configuration_provider');
+    	$def->addArgument($storeBuilder->getResponseConfigMap());
+    }
+    
+    private function loadBundleStoreConfig($bundleName, ConfigurationBuilder $builder, $container) {
+    	$dir = $this->resolvePath('@'.$bundleName.'/Resources/config/stores', $container);
+    	if(is_dir($dir)) {
+    		
+    		if(is_file($dir.'/default.yml')) {
+    			$arConfig = Yaml::parse($dir.'/default.yml');
+    			if(isset($arConfig['default'])) {
+    				$builder->setConfig('default',$arConfig['default']);
+    			}
+    		}
+    		
+    		$di = new \DirectoryIterator($dir);
+    		foreach($di as $file) {
+    			if($file->isDot() || $file->getFilename() == 'default.yml') {continue;}
+    			$arConfig = Yaml::parse($file->getPathname());
+    			$storeName = $file->getBasename('.yml');
+    			if(!isset($arConfig[$storeName])) {
+    				
+    			}
+    			$builder->setConfig($storeName, $arConfig[$storeName]);
+    		}
+    	}
     }
 }

@@ -1,0 +1,37 @@
+default:
+  request:
+    id:
+      key: id
+      type: integer
+    node:
+      key: node
+      type: string
+    filters:
+      key: filters
+      type: Webit\Tools\Data\FilterCollection
+      format: json
+    sorters: 
+      key: sorters
+      type: Webit\Tools\Data\SorterCollection
+      format: json
+    limit:
+      key: limit
+      type: integer
+    offset:
+      key: start
+      type: integer
+    page: 
+      key: page
+      type: integer
+    data:
+      key: data
+      type: array
+  response:
+    format: json
+    serializer_groups:
+      load: [store, storeLoad]
+      load_list: [store, storeList]
+      load_children: [store, storeList]
+      create: [store, storeCreate]
+      update: [store, storeUpdate]
+      delete: [store, storeDelete]

@@ -1,3 +1,5 @@
-webit_sencha_touch_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: WebitSenchaBundle:Default:index }
+WebitSenchaBundle_store:
+    type: rest
+    resource: webit_sencha.store_controller
+    options:
+        expose: true

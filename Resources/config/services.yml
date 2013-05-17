@@ -2,6 +2,13 @@ parameters:
     webit_sencha.installer.class: Webit\Bundle\SenchaBundle\Component\Common\Installer
     webit_sencha.extjs_controller.class: Webit\Bundle\SenchaBundle\Controller\ExtJsController
     webit_sencha.touch_controller.class: Webit\Bundle\SenchaBundle\Controller\TouchController
+    webit_sencha.store_controller.class: Webit\Bundle\SenchaBundle\Controller\StoreController
+    webit_sencha.tree_store_controller.class: Webit\Bundle\SenchaBundle\Controller\TreeStoreController
+    webit_sencha.store_provider.class: Webit\Bundle\SenchaBundle\Component\Store\StoreProvider
+    webit_sencha.store_request_factory.class: Webit\Bundle\SenchaBundle\Component\Store\StoreRequestFactory
+    webit_sencha.store_response_configuration_provider.class: Webit\Bundle\SenchaBundle\Component\Store\Configuration\ResponseConfigurationProvider
+    webit_sencha.store_controller_filter_listener.class: Webit\Bundle\SenchaBundle\Listener\StoreControllerFilter
+    webit_sencha.store_response_filter_listener.class: Webit\Bundle\SenchaBundle\Listener\StoreResponseFilter
     
 services:
     webit_sencha.installer:
@@ -13,3 +20,30 @@ services:
     webit_sencha.touch_controller:
         class: %webit_sencha.touch_controller.class%
         arguments: [@service_container]
+    webit_sencha.store_controller:
+        class: %webit_sencha.store_controller.class%
+        calls:
+            - [setContainer,[@service_container]]
+    webit_sencha.tree_store_controller:
+        class: %webit_sencha.tree_store_controller.class%
+        calls:
+            - [setContainer,[@service_container]]
+    webit_sencha.store_provider:
+        class: %webit_sencha.store_provider.class%
+    webit_sencha.store_request_factory:
+        class: %webit_sencha.store_request_factory.class%
+        arguments: [{},@request, @serializer]
+        scope: request
+    webit_sencha.store_response_configuration_provider:
+        class: %webit_sencha.store_response_configuration_provider.class%
+    webit_sencha.store_controller_filter_listener:
+        class: %webit_sencha.store_controller_filter_listener.class%
+        arguments: [@webit_sencha.store_provider, @webit_sencha.store_request_factory, %webit_sencha.request_store_key%]
+        scope: request
+        tags:
+            - { name: kernel.event_subscriber }
+    webit_sencha.store_response_filter_listener:
+        class: %webit_sencha.store_response_filter_listener.class%
+        arguments: [@webit_sencha.store_response_configuration_provider]
+        tags:
+            - { name: kernel.event_subscriber }

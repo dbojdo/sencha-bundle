@@ -1,0 +1,14 @@
+Webit\Bundle\SenchaBundle\Component\Store\StoreResponse:
+  properties:
+    success:
+      type: boolean
+      groups: [store]
+    data:
+      groups: [store]
+    total:
+      type: integer
+      groups: [store]
+    messages:
+      type: array
+      groups: [store]
+      
