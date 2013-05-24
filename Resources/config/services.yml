@@ -9,6 +9,7 @@ parameters:
     webit_sencha.store_response_configuration_provider.class: Webit\Bundle\SenchaBundle\Component\Store\Configuration\ResponseConfigurationProvider
     webit_sencha.store_controller_filter_listener.class: Webit\Bundle\SenchaBundle\Listener\StoreControllerFilter
     webit_sencha.store_response_filter_listener.class: Webit\Bundle\SenchaBundle\Listener\StoreResponseFilter
+    webit_sencha.pre_deserialize_listener.class: Webit\Tools\Data\PreDeserializeListener
     
 services:
     webit_sencha.installer:
@@ -47,3 +48,7 @@ services:
         arguments: [@webit_sencha.store_response_configuration_provider]
         tags:
             - { name: kernel.event_subscriber }
+    webit_sencha.pre_deserialize_listener:
+        class: %webit_sencha.pre_deserialize_listener.class%
+        tags:
+            - { name: jms_serializer.event_subscriber }

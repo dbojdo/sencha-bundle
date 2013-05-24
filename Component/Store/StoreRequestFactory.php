@@ -41,11 +41,14 @@ class StoreRequestFactory {
 		foreach($config->getBaseParams() as $key) {
 			$p = $refObject->getProperty($key);
 			$p->setAccessible(true);
+			$paramValue = $this->request->get($config->getParamKey($key),$config->getParamDefaultValue($key));
+			if(in_array($config->getParamType($key),array('string','date'))) {
+				$paramValue = $this->jsonfiy($paramValue);
+			}
 
-			$value = $this->serializer->deserialize($this->request->get($config->getParamKey($key),$config->getParamDefaultValue($key)), $config->getParamType($key), $config->getParamFormat($key));
+			$value = $this->serializer->deserialize($paramValue, $config->getParamType($key), $config->getParamFormat($key));
 			$p->setValue($storeRequest, $value);
 			$p->setAccessible(false);
-			//unset($config[$key]);
 		}
 		
 		$others = array();
@@ -69,6 +72,10 @@ class StoreRequestFactory {
 		}
 		
 		return $storeRequest;
+	}
+	
+	private function jsonfiy($value) {
+		return json_encode($value);
 	}
 	
 	private function getRequestConfig($key) {

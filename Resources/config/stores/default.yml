@@ -7,12 +7,12 @@ default:
       key: node
       type: string
     filters:
-      key: filters
+      key: filter
       type: Webit\Tools\Data\FilterCollection
       format: json
       default_value: "[]"
     sorters: 
-      key: sorters
+      key: sorter
       type: Webit\Tools\Data\SorterCollection
       format: json
       default_value: "[]"
@@ -28,6 +28,7 @@ default:
     data:
       key: data
       type: array
+      format: json
       default_value: "[]"
   response:
     format: json
