@@ -26,9 +26,10 @@ class Configuration implements ConfigurationInterface
         	->arrayNode('extjs')
         		->addDefaultsIfNotSet()
         		->children()
-	        		->scalarNode('version')->defaultValue('4.2.0')->end()
+	        		->scalarNode('version')->defaultValue('4.2.1')->end()
 	        		->arrayNode('download_url')
 	        			->defaultValue(array(
+	        			    '4.2.1' => 'http://cdn.sencha.com/ext/gpl/ext-4.2.1-gpl.zip',
 	        				'4.2.0' => 'http://cdn.sencha.com/ext/gpl/ext-4.2.0-gpl.zip',
 	        				'4.1.1' => 'http://cdn.sencha.io/ext-4.1.1-gpl.zip'
 	        			))
