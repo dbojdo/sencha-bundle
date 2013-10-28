@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
         ->children()
             ->scalarNode('request_store_key')->defaultValue('store')->end()
-            ->scalarNode('assets_dir')->defaultValue('@WebitSenchaBundle/Resources/public/js')->end()
+            ->scalarNode('assets_dir')->defaultValue('%kernel.root_dir%/../web/assets/js')->end()
         	->arrayNode('extjs')
         		->addDefaultsIfNotSet()
         		->children()
