@@ -37,25 +37,5 @@ class InstallCommand extends ContainerAwareCommand {
 		$installer->install($lib, $version, $sf);
 		$output->writeln('Instalation has been finished successfully.');
 	}
-	
-  private function download($url) {
-  	$path = $this->getAssetDir() . '/extjs.zip';
-  	
-		if(file_put_contents($path, file_get_contents($url))) {
-			return $path;
-		}
-		
-		return false;
-  }
-  
-  private function extract($path) {
-  	$zip = new \ZipArchive();
-  	$zip->open($path);
-  	$zip->extractTo($this->getAssetDir());
-  	
-  	rename($this->getAssetDir() . '/'. $zip->getNameIndex(0), $this->getAssetDir() . '/extjs-'.$this->version);
-  	
-  	unlink($path);
-  }
 }
 ?>

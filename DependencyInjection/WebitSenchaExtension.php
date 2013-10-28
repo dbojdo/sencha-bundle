@@ -39,7 +39,7 @@ class WebitSenchaExtension extends Extension
     }
     
     private function resolvePath($path, ContainerBuilder $container) {
-    	if(!in_array($path[0],array('/','@'))) {
+        if(!in_array($path[0],array('/','@','%'))) {
     		$path = '@WebitSenchaBundle/'.$path;	
     	}
     	
