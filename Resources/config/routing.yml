@@ -1,3 +1,8 @@
+webit_sencha_static_data_expose:
+    path: /static-data.{_format}
+    defaults: { _controller: webit_sencha.static_data_controller:exposeStaticDataAction, _format: json }
+    options:
+        expose: true    
 WebitSenchaBundle_store:
     type: rest
     resource: webit_sencha.store_controller

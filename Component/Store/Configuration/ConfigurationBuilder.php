@@ -28,7 +28,7 @@ class ConfigurationBuilder {
 		} else {
 			$arConfig = $this->merge($arConfig);
 			$this->requestMap[$storeName] = $arConfig['request'];
-			$this->responseMap[$storeName] = $arConfig['response']['format'];
+			$this->responseMap[$storeName] = $arConfig['response'];
 		}
 	}
 	

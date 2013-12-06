@@ -3,13 +3,17 @@ parameters:
     webit_sencha.extjs_controller.class: Webit\Bundle\SenchaBundle\Controller\ExtJsController
     webit_sencha.touch_controller.class: Webit\Bundle\SenchaBundle\Controller\TouchController
     webit_sencha.store_controller.class: Webit\Bundle\SenchaBundle\Controller\StoreController
+    webit_sencha.static_data_controller.class: Webit\Bundle\SenchaBundle\Controller\StaticDataController
     webit_sencha.tree_store_controller.class: Webit\Bundle\SenchaBundle\Controller\TreeStoreController
     webit_sencha.store_provider.class: Webit\Bundle\SenchaBundle\Component\Store\StoreProvider
+    webit_sencha.store_request_filter_provider.class: Webit\Bundle\SenchaBundle\Component\Store\StoreRequestFilterProvider
     webit_sencha.store_request_factory.class: Webit\Bundle\SenchaBundle\Component\Store\StoreRequestFactory
     webit_sencha.store_response_configuration_provider.class: Webit\Bundle\SenchaBundle\Component\Store\Configuration\ResponseConfigurationProvider
     webit_sencha.store_controller_filter_listener.class: Webit\Bundle\SenchaBundle\Listener\StoreControllerFilter
+    webit_sencha.store_request_filter_listener.class: Webit\Bundle\SenchaBundle\Listener\StoreRequestFilter
     webit_sencha.store_response_filter_listener.class: Webit\Bundle\SenchaBundle\Listener\StoreResponseFilter
     webit_sencha.pre_deserialize_listener.class: Webit\Tools\Data\PreDeserializeListener
+    webit_sencha.static_data_exposer.class: Webit\Bundle\SenchaBundle\StaticData\StaticDataExposer
     
 services:
     webit_sencha.installer:
@@ -18,6 +22,10 @@ services:
     webit_sencha.extjs_controller:
         class: %webit_sencha.extjs_controller.class%
         arguments: [@service_container]
+    webit_sencha.static_data_controller:
+        class: %webit_sencha.static_data_controller.class%
+        calls:
+            - [setContainer, [@service_container]]
     webit_sencha.touch_controller:
         class: %webit_sencha.touch_controller.class%
         arguments: [@service_container]
@@ -31,6 +39,8 @@ services:
             - [setContainer,[@service_container]]
     webit_sencha.store_provider:
         class: %webit_sencha.store_provider.class%
+    webit_sencha.store_request_filter_provider:
+        class: %webit_sencha.store_request_filter_provider.class%
     webit_sencha.store_request_factory:
         class: %webit_sencha.store_request_factory.class%
         arguments: [{},@request, @serializer]
@@ -43,6 +53,12 @@ services:
         scope: request
         tags:
             - { name: kernel.event_subscriber }
+    webit_sencha.store_request_filter_listener:
+        class: %webit_sencha.store_request_filter_listener.class%
+        arguments: [@webit_sencha.store_request_filter_provider]
+        scope: request
+        tags:
+            - { name: kernel.event_subscriber }
     webit_sencha.store_response_filter_listener:
         class: %webit_sencha.store_response_filter_listener.class%
         arguments: [@webit_sencha.store_response_configuration_provider]
@@ -52,3 +68,5 @@ services:
         class: %webit_sencha.pre_deserialize_listener.class%
         tags:
             - { name: jms_serializer.event_subscriber }
+    webit_sencha.static_data_exposer:
+        class: %webit_sencha.static_data_exposer.class%

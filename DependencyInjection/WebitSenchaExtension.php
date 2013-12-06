@@ -102,11 +102,12 @@ class WebitSenchaExtension extends Extension
     		foreach($di as $file) {
     			if($file->isDot() || $file->getFilename() == 'default.yml') {continue;}
     			$arConfig = Yaml::parse($file->getPathname());
+
     			$storeName = $file->getBasename('.yml');
-    			if(!isset($arConfig[$storeName])) {
-    				
+    			if(isset($arConfig[$storeName])) {
+    			    $builder->setConfig($storeName, $arConfig[$storeName]);
     			}
-    			$builder->setConfig($storeName, $arConfig[$storeName]);
+    			
     		}
     	}
     }

@@ -45,7 +45,7 @@ class StoreRequestFactory {
 			if(in_array($config->getParamType($key),array('string','date'))) {
 				$paramValue = $this->jsonfiy($paramValue);
 			}
-
+        
 			$value = $this->serializer->deserialize($paramValue, $config->getParamType($key), $config->getParamFormat($key));
 			$p->setValue($storeRequest, $value);
 			$p->setAccessible(false);
