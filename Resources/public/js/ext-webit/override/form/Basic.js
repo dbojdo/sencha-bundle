@@ -1,16 +1,43 @@
 Ext.define('Webit.override.form.Basic', {
     override: 'Ext.form.Basic', 
     loadRecord: function(record) {
-//    	Ext.each(this.owner.query('combo'),function(combo) {
-//				if(record.fields.containsKey(combo.getItemId())) {
-//					if(record.get(combo.getName()) && combo.findRecordByValue(record.get(combo.getName())) == false) {
-//						combo.getStore().insert(0,record.get(combo.getItemId()));	
-//					}
-//				}
-//			});
+    	var values = {};
+    	var findRealValue = function(fieldName) {
+    		var value;
+    		var arField = fieldName.split('.');
+    		
+    		var r = record;
+    		Ext.each(arField, function(f) {
+    			if(r instanceof Ext.data.Model) {
+    				value = r.get(f);
+    				if(value instanceof Ext.data.Store) {
+    					arValue = [];
+    					value.each(function(se) {
+    						arValue.push(se);
+    					});
+    					value = arValue;
+    				}
+    				r = r.get(f);
+    			} else {
+    				value = r;
+    				return false;
+    			}
+    		});
+    		
+    		return value;
+    	};
+    	this.getFields().each(function(field){
+    		if(Ext.isEmpty(field.getName())) {
+    			return true;
+    		}
+    		
+    		if(Ext.isDefined(values[field.getName()]) == false) {
+    			values[field.getName()] = findRealValue(field.getName());
+    		}
+    	});
 			
-			this._record = record;
-      return this.setValues(record.data);
+		this._record = record;
+    	return this.setValues(values);
     },
     setValues: function(values, arrayField) {
         var me = this;
