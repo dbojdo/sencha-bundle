@@ -1,4 +1,5 @@
 Ext.define('Webit.data.StaticData',{
+	singleton: true,
 	mixins: {
         observable: 'Ext.util.Observable'
     },
@@ -6,6 +7,7 @@ Ext.define('Webit.data.StaticData',{
     data: {},
 	stores: [],
 	loaded: false,
+	loading: false,
 	constructor: function (config) {
         this.mixins.observable.constructor.call(this, config);
         Ext.apply(this, config);
@@ -22,9 +24,11 @@ Ext.define('Webit.data.StaticData',{
 		return this.data[key];
 	},
 	load: function() {
+		this.loading = true;
 		var request = Ext.Ajax.request({
 			url: this.url,
 			success: function(response) {
+				this.loading = false;
 				this.loaded = true;
 				var json = Ext.decode(response.responseText);
 				for(var key in json['data']) {

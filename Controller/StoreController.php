@@ -50,7 +50,7 @@ class StoreController extends FOSRestController implements StoreAwareInterface {
 		$view = $this->view($response, 200);
 		$view->setFormat('json');
 		
-		return $this->handleView($view);
+		return $view;
 	}
 	
 	/**
@@ -64,7 +64,7 @@ class StoreController extends FOSRestController implements StoreAwareInterface {
 		$view = $this->view($response, 200);
 		$view->setFormat('json');
 		
-		return $this->handleView($view);
+		return $view;
 	}
 	
 	/**
@@ -78,7 +78,7 @@ class StoreController extends FOSRestController implements StoreAwareInterface {
 		$view = $this->view($response, 200);
 		$view->setFormat('json');
 		
-		return $this->handleView($view);
+		return $view;
 	}
 	
 	/**
