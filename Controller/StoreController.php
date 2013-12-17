@@ -87,7 +87,7 @@ class StoreController extends FOSRestController implements StoreAwareInterface {
 	 * @FOS\Delete
 	 */
 	public function deleteAction(StoreRequestInterface $storeRequest) {
-		$response = $this->store->remove($storeRequest);
+		$response = $this->store->delete($storeRequest);
 		
 		$view = $this->view($response, 200);
 		return $view;

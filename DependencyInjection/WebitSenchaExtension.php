@@ -90,7 +90,6 @@ class WebitSenchaExtension extends Extension
     private function loadBundleStoreConfig($bundleName, ConfigurationBuilder $builder, $container) {
     	$dir = $this->resolvePath('@'.$bundleName.'/Resources/config/stores', $container);
     	if(is_dir($dir)) {
-    		
     		if(is_file($dir.'/default.yml')) {
     			$arConfig = Yaml::parse($dir.'/default.yml');
     			if(isset($arConfig['default'])) {
@@ -104,10 +103,9 @@ class WebitSenchaExtension extends Extension
     			$arConfig = Yaml::parse($file->getPathname());
 
     			$storeName = $file->getBasename('.yml');
-    			if(isset($arConfig[$storeName])) {
-    			    $builder->setConfig($storeName, $arConfig[$storeName]);
-    			}
-    			
+    			foreach($arConfig as $storeName=>$storeConfig) {
+    			    $builder->setConfig($storeName, $storeConfig);
+    			}    			
     		}
     	}
     }
