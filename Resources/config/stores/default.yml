@@ -12,7 +12,7 @@ default:
       format: json
       default_value: "[]"
     sorters: 
-      key: sorter
+      key: sort
       type: Webit\Tools\Data\SorterCollection
       format: json
       default_value: "[]"
