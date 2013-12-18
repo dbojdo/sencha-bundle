@@ -47,22 +47,36 @@ Ext.define('Webit.override.form.Basic', {
     updateRecord: function(record) {
     	var form = this.owner;
         var values = this.getFieldValues(), name, obj = {};
-
+		console.info(values);
         var findRecord = function(fieldName, r) {
         	var arName = fieldName.split('.');
         	var length = arName.length;
+        	var found = r;
         	Ext.each(arName,function(f, i) {
         		if(i < length-1) {
-        			r = r.get(f);
+        			found = r.get(f);
+        			if(Ext.isEmpty(found)) {
+        				found = false;
+        				return false;
+        				var cls = Ext.getClassName(r);
+        				Ext.Error.raise(Ext.String.format('Can not find Ext.data.Model instance for field "{0}" in "{1}")',f,cls));
+        			}
         		}
         	});
         	
-        	return r;
+        	return found;
         };
         var arEdited = [];
         for(var fieldName in values) {
         	var r = findRecord(fieldName, record);
+        	if(r == false) {
+        		continue;
+        	}
         	if(Ext.Array.contains(arEdited,r) == false) {
+        		if(r instanceof Ext.data.Model == false) {
+        			var cls = Ext.getClassName(record);
+        			Ext.Error.raise(Ext.String.format('Found value is not an Ext.data.Model (Property "{0}" of "{1}")',fieldName,cls));
+        		}
         		arEdited.push(r);
         		r.beginEdit();
         	}
