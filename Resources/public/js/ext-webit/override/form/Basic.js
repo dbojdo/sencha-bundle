@@ -32,10 +32,13 @@ Ext.define('Webit.override.form.Basic', {
     		}
     		
     		if(Ext.isDefined(values[field.getName()]) == false) {
-    			values[field.getName()] = findRealValue(field.getName());
+    			var realValue = findRealValue(field.getName());
+    			if(Ext.isDefined(realValue)) {
+    				values[field.getName()] = realValue;	
+    			}
     		}
     	});
-			
+		
 		this._record = record;
     	return this.setValues(values);
     },
