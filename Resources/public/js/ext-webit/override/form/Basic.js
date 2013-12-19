@@ -47,7 +47,6 @@ Ext.define('Webit.override.form.Basic', {
     updateRecord: function(record) {
     	var form = this.owner;
         var values = this.getFieldValues(), name, obj = {};
-		console.info(values);
         var findRecord = function(fieldName, r) {
         	var arName = fieldName.split('.');
         	var length = arName.length;
@@ -81,14 +80,17 @@ Ext.define('Webit.override.form.Basic', {
         		r.beginEdit();
         	}
         	var arName = fieldName.split('.');
-        	r.set(arName[arName.length - 1], values[fieldName]);
+        	var i = r.fields.findIndex('name',arName[arName.length - 1]);
+        	if(i >= 0) {
+        		r.set(arName[arName.length - 1], values[fieldName]);
+        	}
         }
         
         arEdited.reverse();
         Ext.each(arEdited, function(e){
         	e.endEdit();
         });
-        
+
         return this;
     }
 });
