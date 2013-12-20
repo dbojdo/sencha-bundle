@@ -42,11 +42,21 @@ class StoreRequestFactory {
 			$p = $refObject->getProperty($key);
 			$p->setAccessible(true);
 			$paramValue = $this->request->get($config->getParamKey($key),$config->getParamDefaultValue($key));
+			
 			if(in_array($config->getParamType($key),array('string','date'))) {
 				$paramValue = $this->jsonfiy($paramValue);
 			}
-        
+			
+			            
 			$value = $this->serializer->deserialize($paramValue, $config->getParamType($key), $config->getParamFormat($key));
+			
+			if(in_array($key,array('filters','sorters'))) {
+			    $cls = $config->getParamType($key);
+			    if($value instanceof $cls == false) {
+			        $value = new $cls($value);
+			    }
+			}
+			
 			$p->setValue($storeRequest, $value);
 			$p->setAccessible(false);
 		}

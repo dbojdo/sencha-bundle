@@ -36,6 +36,11 @@ class StoreRequest implements StoreRequestInterface {
 	public function __construct($storeName, Request $request, SorterCollection $sorters = null, FilterCollection $filters = null, $data = null, $limit = null, $offset = null, $page = null) {
 		$this->storeName = $storeName;
 		$this->request = $request;
+		$this->filters = $filters;
+		$this->data = $data;
+		$this->limit = $limit;
+		$this->offset = $offset;
+		$this->page = $page;
 	}
 	
 	public function getStoreName() {
