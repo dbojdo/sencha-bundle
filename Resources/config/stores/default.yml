@@ -8,12 +8,12 @@ default:
       type: string
     filters:
       key: filter
-      type: Webit\Tools\Data\FilterCollection
+      type: Webit\Tools\Data\FilterCollection<Webit\Tools\Data\Filter>
       format: json
       default_value: "[]"
     sorters: 
       key: sort
-      type: Webit\Tools\Data\SorterCollection
+      type: Webit\Tools\Data\SorterCollection<Webit\Tools\Data\Sorter>
       format: json
       default_value: "[]"
     limit:

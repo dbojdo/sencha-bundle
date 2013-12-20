@@ -49,9 +49,9 @@ class StoreRequestFactory {
 			
 			            
 			$value = $this->serializer->deserialize($paramValue, $config->getParamType($key), $config->getParamFormat($key));
-			
 			if(in_array($key,array('filters','sorters'))) {
-			    $cls = $config->getParamType($key);
+			    $arCls = explode("<",$config->getParamType($key));
+			    $cls = array_shift($arCls);
 			    if($value instanceof $cls == false) {
 			        $value = new $cls($value);
 			    }
