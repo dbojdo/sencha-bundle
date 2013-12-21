@@ -40,9 +40,10 @@ class Configuration implements ConfigurationInterface
         	->arrayNode('touch')
         		->addDefaultsIfNotSet()
         		->children()
-        			->scalarNode('version')->defaultValue('2.2.0')->end()
+        			->scalarNode('version')->defaultValue('2.3.1')->end()
 		        	->arrayNode('download_url')
 			        	->defaultValue(array(
+			        		'2.3.1' => 'http://cdn.sencha.com/touch/sencha-touch-2.3.1-gpl.zip',
 			        		'2.2.0' => 'http://cdn.sencha.io/touch/sencha-touch-2.2.0-gpl.zip',
 			        		'2.1.1' => 'http://cdn.sencha.io/touch/sencha-touch-2.1.1-gpl.zip'
 			        	))->prototype('scalar')->end()
