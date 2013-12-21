@@ -47,7 +47,6 @@ class StoreRequestFactory {
 				$paramValue = $this->jsonfiy($paramValue);
 			}
 			
-			            
 			$value = $this->serializer->deserialize($paramValue, $config->getParamType($key), $config->getParamFormat($key));
 			if(in_array($key,array('filters','sorters'))) {
 			    $arCls = explode("<",$config->getParamType($key));
