@@ -8,8 +8,15 @@ Ext.define('Webit.override.form.Basic', {
     		
     		var r = record;
     		Ext.each(arField, function(f) {
-    			if(r instanceof Ext.data.Model) {
-    				value = r.get(f);
+    			if(Ext.isObject(r)) {
+    				if(r instanceof Ext.data.Model) {
+    					value = r.get(f);
+    					r = r.get(f);
+    				} else {
+    					value = Ext.isDefined(r[f]) ? r[f] : null;
+    					r = Ext.isDefined(r[f]) ? r[f] : null;
+    				}
+    				
     				if(value instanceof Ext.data.Store) {
     					arValue = [];
     					value.each(function(se) {
@@ -17,7 +24,6 @@ Ext.define('Webit.override.form.Basic', {
     					});
     					value = arValue;
     				}
-    				r = r.get(f);
     			} else {
     				value = r;
     				return false;
@@ -50,13 +56,15 @@ Ext.define('Webit.override.form.Basic', {
     updateRecord: function(record) {
     	var form = this.owner;
         var values = this.getFieldValues(), name, obj = {};
+
         var findRecord = function(fieldName, r) {
         	var arName = fieldName.split('.');
         	var length = arName.length;
         	var found = r;
+
         	Ext.each(arName,function(f, i) {
         		if(i < length-1) {
-        			found = r.get(f);
+        			found = r instanceof Ext.data.Model ? found.get(f) : found[f];
         			if(Ext.isEmpty(found)) {
         				found = false;
         				return false;
@@ -68,24 +76,33 @@ Ext.define('Webit.override.form.Basic', {
         	
         	return found;
         };
+        
         var arEdited = [];
         for(var fieldName in values) {
         	var r = findRecord(fieldName, record);
         	if(r == false) {
         		continue;
         	}
-        	if(Ext.Array.contains(arEdited,r) == false) {
-        		if(r instanceof Ext.data.Model == false) {
-        			var cls = Ext.getClassName(record);
-        			Ext.Error.raise(Ext.String.format('Found value is not an Ext.data.Model (Property "{0}" of "{1}")',fieldName,cls));
-        		}
-        		arEdited.push(r);
-        		r.beginEdit();
+        	
+        	if(r instanceof Ext.data.Model) {
+	        	if(Ext.Array.contains(arEdited,r) == false) {
+	        		if(r instanceof Ext.data.Model == false) {
+	        			var cls = Ext.getClassName(record);
+	        			Ext.Error.raise(Ext.String.format('Found value is not an Ext.data.Model (Property "{0}" of "{1}")',fieldName,cls));
+	        		}
+	        		arEdited.push(r);
+	        		r.beginEdit();
+	        	}
         	}
+        	
         	var arName = fieldName.split('.');
-        	var i = r.fields.findIndex('name',arName[arName.length - 1]);
-        	if(i >= 0) {
-        		r.set(arName[arName.length - 1], values[fieldName]);
+        	if(r instanceof Ext.data.Model) {
+	        	var i = r.fields.findIndex('name',arName[arName.length - 1]);
+	        	if(i >= 0) {
+	        		r.set(arName[arName.length - 1], values[fieldName]);
+	        	}
+        	} else {        		
+        		r[arName[arName.length - 1]] = values[fieldName];
         	}
         }
         
