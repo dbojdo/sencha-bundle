@@ -14,6 +14,7 @@ parameters:
     webit_sencha.store_response_filter_listener.class: Webit\Bundle\SenchaBundle\Listener\StoreResponseFilter
     webit_sencha.pre_deserialize_listener.class: Webit\Tools\Data\PreDeserializeListener
     webit_sencha.static_data_exposer.class: Webit\Bundle\SenchaBundle\StaticData\StaticDataExposer
+    webit_sencha.data_exposer.security.class: Webit\Bundle\SenchaBundle\StaticData\SecurityDataExposer
     webit_sencha.collection_serializer_handler.class: Webit\Tools\Data\CollectionSerializationHandler
     
 services:
@@ -67,6 +68,11 @@ services:
             - { name: kernel.event_subscriber }
     webit_sencha.static_data_exposer:
         class: %webit_sencha.static_data_exposer.class%
+    webit_sencha.data_exposer.security:
+        class: %webit_sencha.data_exposer.security.class%
+        arguments: [@security.context, %webit_sencha.security.user_model%]
+        tags:
+           - { name: webit_sencha.static_data_exposer }
     webit_sencha.collection_serializer_handler:
         class: %webit_sencha.collection_serializer_handler.class%
         tags:

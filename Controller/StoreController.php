@@ -16,7 +16,7 @@ use FOS\RestBundle\Controller\Annotations as FOS;
 /**
  * 
  * @author dbojdo
- * @FOS\NamePrefix("webit_sencha_")
+ * @FOS\NamePrefix("webit_sencha_store_")
  */
 class StoreController extends FOSRestController implements StoreAwareInterface {
 	/**
@@ -37,7 +37,6 @@ class StoreController extends FOSRestController implements StoreAwareInterface {
 	
 	/**
 	 * @param StoreRequestInterface $request
-	 * @FOS\Route("/store")
 	 * @FOS\Get
 	 */
 	public function getAction(StoreRequestInterface $storeRequest) {
@@ -55,7 +54,6 @@ class StoreController extends FOSRestController implements StoreAwareInterface {
 	
 	/**
 	 * @param StoreRequestInterface $request
-	 * @FOS\Route("/store")
 	 * @FOS\Post
 	 */
 	public function postAction(StoreRequestInterface $storeRequest) {
@@ -69,7 +67,6 @@ class StoreController extends FOSRestController implements StoreAwareInterface {
 	
 	/**
 	 * @param StoreRequestInterface $request
-	 * @FOS\Route("/store")
 	 * @FOS\Put
 	 */
 	public function putAction(StoreRequestInterface $storeRequest) {
@@ -83,7 +80,6 @@ class StoreController extends FOSRestController implements StoreAwareInterface {
 	
 	/**
 	 * @param StoreRequestInterface $request
-	 * @FOS\Route("/store")
 	 * @FOS\Delete
 	 */
 	public function deleteAction(StoreRequestInterface $storeRequest) {

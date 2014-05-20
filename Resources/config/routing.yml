@@ -2,12 +2,28 @@ webit_sencha_static_data_expose:
     path: /static-data.{_format}
     defaults: { _controller: webit_sencha.static_data_controller:exposeStaticDataAction, _format: json }
     options:
-        expose: true    
-WebitSenchaBundle_store:
-    type: rest
-    resource: webit_sencha.store_controller
-    options:
         expose: true
+        
+webit_sencha_store_get:
+    path: /store
+    defaults: { _controller: webit_sencha.store_controller:getAction, _format: json }
+    condition: "context.getMethod() in ['GET']"
+
+webit_sencha_store_post:
+    path: /store
+    defaults: { _controller: webit_sencha.store_controller:postAction, _format: json }
+    condition: "context.getMethod() in ['POST']"
+
+webit_sencha_store_put:
+    path: /store
+    defaults: { _controller: webit_sencha.store_controller:putAction, _format: json }
+    condition: "context.getMethod() in ['PUT']"
+
+webit_sencha_store_delete:
+    path: /store
+    defaults: { _controller: webit_sencha.store_controller:deleteAction, _format: json }
+    condition: "context.getMethod() in ['DELETE']"
+
 WebitSenchaBundle_tree_store:
     type: rest
     resource: webit_sencha.tree_store_controller

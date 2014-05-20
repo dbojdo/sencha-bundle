@@ -31,7 +31,7 @@ class WebitSenchaExtension extends Extension
         
         $container->setParameter($this->getAlias().'.assets_dir', $this->resolvePath($config['assets_dir'],$container));
         $container->setParameter($this->getAlias().'.request_store_key', $config['request_store_key']);
-        
+        $container->setParameter($this->getAlias().'.security.user_model', $config['security']['user_model']);
         $this->loadExtJs($config['extjs'], $container);
         $this->loadTouch($config['touch'], $container);
         

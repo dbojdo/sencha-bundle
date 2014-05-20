@@ -2,9 +2,11 @@ Ext.define('Ext.ux.form.DateTimeField', {
 	  extend: 'Ext.form.field.Date',
 	  alias: 'widget.datetimefield',
 	  requires: ['Ext.ux.DateTimePicker'],
-
+	  config: {
+	  	timeFormat: 'H:i:s'
+	  },
 	  initComponent: function() {
-		  this.format = this.format + ' ' + 'H:i:s';
+		  this.format = this.format + ' ' + this.timeFormat;
 		  this.callParent();
 	  },
 	  // overwrite

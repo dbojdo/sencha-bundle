@@ -5,6 +5,10 @@ Ext.define('Webit.security.AccessControlable',{
 			return true;
 		}
 		
+		if(Ext.isEmpty(user)) {
+			return false;
+		}
+
 		var isAllowed = false;
 		Ext.Array.each(this.allowedRoles,function(role) {
 			if(user.hasRole(role)) {

@@ -7,13 +7,12 @@ use Webit\Bundle\SenchaBundle\Component\Store\StoreRequestInterface;
 
 use Webit\Bundle\SenchaBundle\Component\Store\Configuration\ResponseConfigurationProvider;
 
-use FOS\RestBundle\Controller\Annotations\View;
-
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 
 use FOS\RestBundle\EventListener\ViewResponseListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use FOS\RestBundle\View\View;
 
 class StoreResponseFilter implements EventSubscriberInterface {
 	/**
@@ -39,12 +38,10 @@ class StoreResponseFilter implements EventSubscriberInterface {
 		if($storeRequest instanceof StoreRequestInterface) {
 			$config = $this->provider->getConfiguration($storeRequest->getStoreName());
 			
-			$_view = new View(array());
+			$view = $event->getControllerResult();			
 			if($action = $storeRequest->getActionType()) {
-				$_view->setSerializerGroups($config->getSerializerGroups($action));
+			    $view->getSerializationContext()->setGroups($config->getSerializerGroups($action));
 			}
-			
-			$event->getRequest()->attributes->set('_view', $_view);
 		}
 	}
 	

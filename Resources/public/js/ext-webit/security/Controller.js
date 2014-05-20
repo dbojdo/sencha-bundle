@@ -1,12 +1,10 @@
 Ext.define('Webit.security.Controller',{
 	extend: 'Ext.app.Controller',
 	init: function() {
-		SecurityContext['user'] = Ext.create(SecurityContext['user']['model'],SecurityContext['user']['data']);
-		
 		this.control({
 			'container' : {
 				beforeadd: function(container, component) {
-					return this.isAllowed(SecurityContext['user'], component);
+					return this.isAllowed(Webit.Security.getUser() , component);
 				}
 			}
 		});
