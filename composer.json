@@ -4,7 +4,7 @@
 	"description": "Web-IT Sencha (ExtJs and Touch) Bundle",
 	"keywords": ["web-it","sencha","extjs", "sencha touch"],
 	"homepage": "http://www.web-it.eu",
-	"license": "Web-IT",
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Web-IT",
